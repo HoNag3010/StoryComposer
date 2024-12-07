@@ -10,7 +10,6 @@ import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
-
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -70,9 +69,11 @@ public class MyFrame extends JFrame {
                         JOptionPane.showMessageDialog(null, "File saved successfully!");
                     }
                 } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, "An error occurred.");
                 }
             }
         });
+        mnuFile.add(miSave);
         JMenuItem miClear = new JMenuItem("Clear");
         miClear.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -108,23 +109,37 @@ public class MyFrame extends JFrame {
         panEast.setLayout(gl);
         JButton btn1 = new JButton("noun");
         btn1.addActionListener(new ActionListener() {
+            String randomNoun = wc.chooseNoun();
             public void actionPerformed(ActionEvent e) {
-                tarStory.setText(tarStory.getText() + " ");
+                if (words != null) {
+                    tarStory.setText(tarStory.getText() + " " + randomNoun);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Use File -> Open to load the words first.");
+                }
             }
         });
         JButton btn2 = new JButton("verb");
         btn2.addActionListener(new ActionListener() {
+            String randomVerb = wc.chooseVerb();
             public void actionPerformed(ActionEvent e) {
                 if (words != null) {
-                    String randomWord = wc.chooseWordFromList(words);
-                    tarStory.setText(tarStory.getText() + randomWord + " ");
+                    tarStory.setText(tarStory.getText() + " " + randomVerb);
                 } else {
                     JOptionPane.showMessageDialog(null, "Use File -> Open to load the words first.");
                 }
-         
             }
         });
         JButton btn3 = new JButton("adjective");
+        btn3.addActionListener(new ActionListener() {
+            String randomAdj = wc.chooseAdjective();
+            public void actionPerformed(ActionEvent e) {
+                if (words != null) {
+                    tarStory.setText(tarStory.getText() + " " + randomAdj);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Use File -> Open to load the words first.");
+                }
+            }
+        });
         panEast.add(btn1);
         panEast.add(btn2);
         panEast.add(btn3);
@@ -153,11 +168,7 @@ public class MyFrame extends JFrame {
         c.add(panSouth,BorderLayout.SOUTH);
         setupMenu();
     }
-    @Override
-    public void paint(Graphics g) {
-        super.paint(g);
-    }
-
+    
     public MyFrame() {
         words = null;
         wc = new WordChooser();

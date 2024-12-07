@@ -4,5 +4,4 @@ public class App {
         MyFrame frm = new MyFrame();
         frm.setVisible(true);
     }
-    
 }

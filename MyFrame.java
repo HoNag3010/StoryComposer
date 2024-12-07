@@ -1,7 +1,6 @@
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.FlowLayout;
-import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,10 +21,16 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+/**
+ * This class mainly displays and does everything in the UI Panel
+ */
 public class MyFrame extends JFrame {
     private JTextArea tarStory;
     private ArrayList<String> words;
     private WordChooser wc;
+    /**
+     * This method is to make a line on top which has File and Help
+     */
     public void setupMenu() {
         JMenuBar mbar = new JMenuBar();
         setJMenuBar(mbar);
@@ -39,6 +44,7 @@ public class MyFrame extends JFrame {
                 if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
                     try {
                         words = WordFileReader.readWords(chooser.getSelectedFile());
+                        wc.loadWords(words);
                         for (String word : words) {
                             System.out.println(word);
                         }
@@ -96,8 +102,11 @@ public class MyFrame extends JFrame {
             } 
         });
         mnuHelp.add(miABout);
-
     }
+
+    /**
+     * This class is for buttons, textArea, and its function
+     */
     public void setupGUI() {
         setBounds(300,300,400,400);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -109,9 +118,9 @@ public class MyFrame extends JFrame {
         panEast.setLayout(gl);
         JButton btn1 = new JButton("noun");
         btn1.addActionListener(new ActionListener() {
-            String randomNoun = wc.chooseNoun();
             public void actionPerformed(ActionEvent e) {
                 if (words != null) {
+                    String randomNoun = wc.chooseNoun();
                     tarStory.setText(tarStory.getText() + " " + randomNoun);
                 } else {
                     JOptionPane.showMessageDialog(null, "Use File -> Open to load the words first.");
@@ -120,9 +129,9 @@ public class MyFrame extends JFrame {
         });
         JButton btn2 = new JButton("verb");
         btn2.addActionListener(new ActionListener() {
-            String randomVerb = wc.chooseVerb();
             public void actionPerformed(ActionEvent e) {
                 if (words != null) {
+                    String randomVerb = wc.chooseVerb();
                     tarStory.setText(tarStory.getText() + " " + randomVerb);
                 } else {
                     JOptionPane.showMessageDialog(null, "Use File -> Open to load the words first.");
@@ -131,9 +140,9 @@ public class MyFrame extends JFrame {
         });
         JButton btn3 = new JButton("adjective");
         btn3.addActionListener(new ActionListener() {
-            String randomAdj = wc.chooseAdjective();
             public void actionPerformed(ActionEvent e) {
                 if (words != null) {
+                    String randomAdj = wc.chooseAdjective();
                     tarStory.setText(tarStory.getText() + " " + randomAdj);
                 } else {
                     JOptionPane.showMessageDialog(null, "Use File -> Open to load the words first.");

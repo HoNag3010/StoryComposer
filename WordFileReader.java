@@ -2,6 +2,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * This class reads file chosen by user
+ */
 public class WordFileReader {
     public static ArrayList<String> readWords(File f) {
         try {
